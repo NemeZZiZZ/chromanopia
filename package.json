@@ -1,0 +1,90 @@
+{
+  "name": "chromanopia",
+  "version": "0.1.0",
+  "description": "Physically accurate colorblindness simulation — three models (Viénot, Machado, Brettel), sRGB linearization, gamut mapping. Zero dependencies.",
+  "keywords": [
+    "colorblind",
+    "color-blind",
+    "color-blindness",
+    "chromanopia",
+    "cvd",
+    "accessibility",
+    "a11y",
+    "protanopia",
+    "deuteranopia",
+    "tritanopia",
+    "machado",
+    "brettel",
+    "vienot",
+    "simulation"
+  ],
+  "license": "MIT",
+  "author": "nemezzizz",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/nemezzizz/chromanopia"
+  },
+  "bugs": {
+    "url": "https://github.com/nemezzizz/chromanopia/issues"
+  },
+  "homepage": "https://github.com/nemezzizz/chromanopia#readme",
+  "type": "module",
+  "main": "./src/index.ts",
+  "module": "./src/index.ts",
+  "types": "./src/index.ts",
+  "exports": {
+    ".": {
+      "import": {
+        "types": "./src/index.ts",
+        "default": "./src/index.ts"
+      },
+      "require": {
+        "types": "./dist/index.d.cts",
+        "default": "./dist/index.cjs"
+      }
+    }
+  },
+  "publishConfig": {
+    "main": "./dist/index.cjs",
+    "module": "./dist/index.js",
+    "types": "./dist/index.d.ts",
+    "exports": {
+      ".": {
+        "import": {
+          "types": "./dist/index.d.ts",
+          "default": "./dist/index.js"
+        },
+        "require": {
+          "types": "./dist/index.d.cts",
+          "default": "./dist/index.cjs"
+        }
+      }
+    }
+  },
+  "engines": {
+    "node": ">=18"
+  },
+  "files": [
+    "dist",
+    "README.md",
+    "LICENSE"
+  ],
+  "scripts": {
+    "build": "tsup && tsc -p tsconfig.build.json --emitDeclarationOnly --outDir dist",
+    "dev": "tsup --watch",
+    "type-check": "tsc --noEmit",
+    "test": "vitest run",
+    "test:watch": "vitest",
+    "docs:dev": "vitepress dev docs",
+    "docs:build": "vitepress build docs",
+    "docs:preview": "vitepress preview docs",
+    "prepublishOnly": "npm run build"
+  },
+  "devDependencies": {
+    "tsup": "^8.5.0",
+    "typescript": "^6.0.2",
+    "vitepress": "^1.6.4",
+    "vitest": "^4.1.3",
+    "vue": "^3.5.32"
+  }
+}
