@@ -32,15 +32,22 @@ import Benchmark from '../../.vitepress/theme/components/Benchmark.vue'
 
 ## 典型结果
 
-*在 Apple M1，Chrome 125 上测量：*
+*一个参考点 — Apple M1、Node 22、预热 JIT、40 次迭代的中位数。你的数值会因硬件、浏览器以及 JIT 的预热程度而有所不同。请在自己的机器上运行上方的性能测试以获取实际数值。*
 
-| 分辨率 | Viénot | Machado | Brettel |
-|---|---|---|---|
-| VGA (640×480) | ~1ms | ~1.5ms | ~6ms |
-| Full HD (1920×1080) | ~8ms | ~10ms | ~40ms |
-| 4K (3840×2160) | ~35ms | ~42ms | ~165ms |
+| 分辨率 | 像素数 | Viénot | Machado | Brettel |
+|---|---|---|---|---|
+| VGA (640×480) | 0.3M | ~60ms | ~40ms | ~80ms |
+| Full HD (1920×1080) | 2.1M | ~420ms | ~260ms | ~520ms |
+| 4K (3840×2160) | 8.3M | ~1.7s | ~1.0s | ~2.1s |
 
-对于实时应用（60fps = 16.7ms 预算），Viénot 和 Machado 可以轻松处理全高清分辨率。对于 4K，建议使用 [Web Worker](/zh/guide/recipes#browser-offscreencanvas-web-worker) 或 [WebGL 着色器](/zh/guide/recipes#webgl-shader-uniform)。
+吞吐量基本上与分辨率无关：稳态下 **Machado ≈ 8 Mpix/s**、**Viénot ≈ 5 Mpix/s**、**Brettel ≈ 4 Mpix/s**。
+
+::: warning
+单次 `simulateBuffer()` 调用在任何超过几十万像素的分辨率下都**无法**装入 60fps 的帧（16.7ms）—— JavaScript 根本无法那么快地处理数百万像素。对于实时使用：
+- 将计算移至 [Web Worker](/zh/guide/recipes#browser-offscreencanvas-web-worker)，以免阻塞主线程
+- 使用 [WebGL shader](/zh/guide/recipes#webgl-shader-uniform) 进行 GPU 加速处理（快 10–100 倍）
+- 对于一次性转换（例如处理一次上传的图像），上述时间没问题 —— 用户会觉得 ~260ms 接近瞬时
+:::
 
 ## 代码
 

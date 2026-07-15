@@ -79,12 +79,16 @@ simulateBuffer(pixels, 'protanomaly', { severity: 0.5 })
 
 ## 性能
 
-该函数每次处理 4 字节，热循环内无内存分配。性能与像素数量线性相关：
+该函数每次处理 4 字节，热循环内无内存分配。性能与像素数量线性相关。在预热的 JavaScript 引擎中，大致为：
 
-| 分辨率 | 像素数 | Machado | Brettel |
-|---|---|---|---|
-| 640×480 | 307K | ~2ms | ~8ms |
-| 1920×1080 | 2.1M | ~12ms | ~45ms |
-| 3840×2160 | 8.3M | ~50ms | ~180ms |
+| 分辨率 | 像素数 | Viénot | Machado | Brettel |
+|---|---|---|---|---|
+| 640×480 | 0.3M | ~60ms | ~40ms | ~80ms |
+| 1920×1080 | 2.1M | ~420ms | ~260ms | ~520ms |
+| 3840×2160 | 8.3M | ~1.7s | ~1.0s | ~2.1s |
 
-*在 Apple M1 上单线程测量。您的结果可能有所不同。*
+*一个参考点 — Apple M1、Node 22、预热 JIT。由于逐像素 XYZ 投影，Brettel 比 Machado 慢约 1.5–2 倍；Viénot 和 Machado 使用相同的矩阵乘法路径，但在此硬件上，Viénot 较小的矩阵在调度上比 JIT 内联的 Machado 路径略慢。*
+
+::: tip
+这些是 CPU/JavaScript 计时。对于实时图像处理，[WebGL shader](../guide/recipes#webgl-shader-uniform) 在 GPU 上运行相同的矩阵，吞吐量约为 10–100 倍。上述数值对于一次性转换（例如处理一次上传的图像）没问题。
+:::

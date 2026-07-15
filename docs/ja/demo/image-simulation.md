@@ -32,15 +32,15 @@ ctx.putImageData(imageData, 0, 0)
 
 ## パフォーマンス
 
-`simulateBuffer` はホットループ内でアロケーションなしにピクセルをインプレースで処理します：
+`simulateBuffer` はホットループ内でアロケーションなしにピクセルをインプレースで処理します。ウォーム状態のJavaScriptエンジンでのスループットはおおよそ以下の通りです：
 
-| 画像サイズ | Machado/Viénot | Brettel |
+| Image size | Machado | Brettel |
 |---|---|---|
-| 640×480（VGA） | 約2ms | 約8ms |
-| 1920×1080（FHD） | 約12ms | 約45ms |
-| 3840×2160（4K） | 約50ms | 約180ms |
+| 640×480 (VGA) | ~40ms | ~80ms |
+| 1920×1080 (FHD) | ~260ms | ~520ms |
+| 3840×2160 (4K) | ~1.0s | ~2.1s |
 
-大きな画像の場合は、メインスレッドのブロックを避けるために[Web Worker](/ja/guide/recipes#browser-offscreencanvas-web-worker)の使用を検討してください。
+*1つの参考値 — Apple M1、Node 22。ブラウザでの結果は環境により異なります。一般的な写真（数メガピクセル）の処理はほぼ瞬時に感じられます。大きな画像やリアルタイム用途では、[Web Worker](/ja/guide/recipes#browser-offscreencanvas-web-worker)または[WebGL shader](/ja/guide/recipes#webgl-shader-uniform)の使用を検討してください。*
 
 ## ヒント
 

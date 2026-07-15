@@ -79,12 +79,16 @@ simulateBuffer(pixels, 'protanomaly', { severity: 0.5 })
 
 ## Performance
 
-The function processes 4 bytes at a time with no allocations inside the hot loop. Performance scales linearly with pixel count:
+The function processes 4 bytes at a time with no allocations inside the hot loop. Performance scales linearly with pixel count. In a warm JavaScript engine, expect roughly:
 
-| Resolution | Pixels | Machado | Brettel |
-|---|---|---|---|
-| 640×480 | 307K | ~2ms | ~8ms |
-| 1920×1080 | 2.1M | ~12ms | ~45ms |
-| 3840×2160 | 8.3M | ~50ms | ~180ms |
+| Resolution | Pixels | Viénot | Machado | Brettel |
+|---|---|---|---|---|
+| 640×480 | 0.3M | ~60ms | ~40ms | ~80ms |
+| 1920×1080 | 2.1M | ~420ms | ~260ms | ~520ms |
+| 3840×2160 | 8.3M | ~1.7s | ~1.0s | ~2.1s |
 
-*Measured on Apple M1, single-threaded. Your results may vary.*
+*One reference point — Apple M1, Node 22, warm JIT. Brettel is ~1.5–2× slower than Machado due to per-pixel XYZ projection; Viénot and Machado use the same matrix-multiply path but Viénot's smaller matrices are slightly slower to dispatch than the JIT-inlined Machado path on this hardware.*
+
+::: tip
+These are CPU/JavaScript timings. For real-time image processing, a [WebGL shader](../guide/recipes#webgl-shader-uniform) runs the same matrix on the GPU at 10–100× the throughput. The numbers above are fine for one-shot transforms (e.g. processing an uploaded image once).
+:::

@@ -79,12 +79,16 @@ simulateBuffer(pixels, 'protanomaly', { severity: 0.5 })
 
 ## Rendimiento
 
-La función procesa 4 bytes a la vez sin asignaciones dentro del bucle principal. El rendimiento escala linealmente con la cantidad de píxeles:
+La función procesa 4 bytes a la vez sin asignaciones dentro del bucle principal. El rendimiento escala linealmente con la cantidad de píxeles. En un motor de JavaScript caliente, espera aproximadamente:
 
-| Resolución | Píxeles | Machado | Brettel |
-|---|---|---|---|
-| 640×480 | 307K | ~2ms | ~8ms |
-| 1920×1080 | 2.1M | ~12ms | ~45ms |
-| 3840×2160 | 8.3M | ~50ms | ~180ms |
+| Resolución | Píxeles | Viénot | Machado | Brettel |
+|---|---|---|---|---|
+| 640×480 | 0.3M | ~60ms | ~40ms | ~80ms |
+| 1920×1080 | 2.1M | ~420ms | ~260ms | ~520ms |
+| 3840×2160 | 8.3M | ~1.7s | ~1.0s | ~2.1s |
 
-*Medido en Apple M1, hilo único. Tus resultados pueden variar.*
+*Un punto de referencia — Apple M1, Node 22, JIT caliente. Brettel es ~1.5–2× más lento que Machado debido a la proyección XYZ por píxel; Viénot y Machado usan la misma ruta de multiplicación de matrices, pero las matrices más pequeñas de Viénot son ligeramente más lentas de despachar que la ruta de Machado alineada por el JIT en este hardware.*
+
+::: tip
+Estos son tiempos de CPU/JavaScript. Para el procesamiento de imágenes en tiempo real, un [shader WebGL](../guide/recipes#webgl-uniforme-de-shader) ejecuta la misma matriz en la GPU a 10–100× el rendimiento. Los números de arriba están bien para transformaciones de una sola vez (p. ej. procesar una imagen subida una vez).
+:::

@@ -32,15 +32,15 @@ ctx.putImageData(imageData, 0, 0)
 
 ## 性能
 
-`simulateBuffer` 就地处理像素，热循环内无内存分配：
+`simulateBuffer` 就地处理像素，热循环内无内存分配。在预热的 JavaScript 引擎中，吞吐量大致为：
 
-| 图像尺寸 | Machado/Viénot | Brettel |
+| 图像尺寸 | Machado | Brettel |
 |---|---|---|
-| 640×480 (VGA) | ~2ms | ~8ms |
-| 1920×1080 (FHD) | ~12ms | ~45ms |
-| 3840×2160 (4K) | ~50ms | ~180ms |
+| 640×480 (VGA) | ~40ms | ~80ms |
+| 1920×1080 (FHD) | ~260ms | ~520ms |
+| 3840×2160 (4K) | ~1.0s | ~2.1s |
 
-对于大图像，建议使用 [Web Worker](/zh/guide/recipes#browser-offscreencanvas-web-worker) 以避免阻塞主线程。
+*一个参考点 — Apple M1、Node 22。你的浏览器结果可能有所不同。处理一张典型照片（几百万像素）感觉接近瞬时；对于大图像或实时使用，请考虑使用 [Web Worker](/zh/guide/recipes#browser-offscreencanvas-web-worker) 或 [WebGL shader](/zh/guide/recipes#webgl-shader-uniform)。*
 
 ## 提示
 

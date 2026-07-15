@@ -32,15 +32,22 @@ El benchmark:
 
 ## Resultados típicos
 
-*Medido en Apple M1, Chrome 125:*
+*Un punto de referencia — Apple M1, Node 22, JIT caliente, mediana sobre 40 iteraciones. Tus números variarán según el hardware, el navegador y lo caliente que esté el JIT. Ejecuta el benchmark de arriba para obtener los números en tu propia máquina.*
 
-| Resolución | Viénot | Machado | Brettel |
-|---|---|---|---|
-| VGA (640×480) | ~1ms | ~1.5ms | ~6ms |
-| Full HD (1920×1080) | ~8ms | ~10ms | ~40ms |
-| 4K (3840×2160) | ~35ms | ~42ms | ~165ms |
+| Resolución | Píxeles | Viénot | Machado | Brettel |
+|---|---|---|---|---|
+| VGA (640×480) | 0.3M | ~60ms | ~40ms | ~80ms |
+| Full HD (1920×1080) | 2.1M | ~420ms | ~260ms | ~520ms |
+| 4K (3840×2160) | 8.3M | ~1.7s | ~1.0s | ~2.1s |
 
-Para aplicaciones en tiempo real (60fps = presupuesto de 16.7ms), Viénot y Machado manejan hasta Full HD cómodamente. Para 4K, considera usar un [Web Worker](/es/guide/recipes#navegador-offscreencanvas-web-worker) o un [shader WebGL](/es/guide/recipes#webgl-uniforme-de-shader).
+El rendimiento es aproximadamente independiente de la resolución: **Machado ≈ 8 Mpix/s**, **Viénot ≈ 5 Mpix/s**, **Brettel ≈ 4 Mpix/s** en estado estable.
+
+::: warning
+Una sola llamada a `simulateBuffer()` **no** cabe en un frame de 60fps (16.7ms) a ninguna resolución por encima de unos cientos de miles de píxeles — JavaScript simplemente no puede procesar millones de píxeles tan rápido. Para uso en tiempo real:
+- Mueve el trabajo a un [Web Worker](/es/guide/recipes#navegador-offscreencanvas-web-worker) para que no bloquee el hilo principal
+- Usa un [shader WebGL](/es/guide/recipes#webgl-uniforme-de-shader) para procesamiento acelerado por GPU (10–100× más rápido)
+- Para transformaciones de una sola vez (p. ej. procesar una imagen subida una vez), los tiempos de arriba están bien — el usuario percibe ~260ms como casi instantáneo
+:::
 
 ## Código
 

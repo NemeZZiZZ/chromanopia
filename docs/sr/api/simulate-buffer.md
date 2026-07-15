@@ -79,12 +79,16 @@ simulateBuffer(pixels, 'protanomaly', { severity: 0.5 })
 
 ## Performanse
 
-Funkcija obrađuje 4 bajta odjednom bez alokacija unutar kritične petlje. Performanse se linearno skaliraju sa brojem piksela:
+Funkcija obrađuje 4 bajta odjednom bez alokacija unutar kritične petlje. Performanse se linearno skaliraju sa brojem piksela. U zagrejanom JavaScript mašini, očekujte otprilike:
 
-| Rezolucija | Pikseli | Machado | Brettel |
-|---|---|---|---|
-| 640×480 | 307K | ~2ms | ~8ms |
-| 1920×1080 | 2.1M | ~12ms | ~45ms |
-| 3840×2160 | 8.3M | ~50ms | ~180ms |
+| Rezolucija | Pikseli | Viénot | Machado | Brettel |
+|---|---|---|---|---|
+| 640×480 | 0.3M | ~60ms | ~40ms | ~80ms |
+| 1920×1080 | 2.1M | ~420ms | ~260ms | ~520ms |
+| 3840×2160 | 8.3M | ~1.7s | ~1.0s | ~2.1s |
 
-*Mereno na Apple M1, jednonitno. Vaši rezultati mogu varirati.*
+*Jedna referentna tačka — Apple M1, Node 22, zagrejan JIT. Brettel je ~1.5–2× sporiji od Machado zbog XYZ projekcije po pikselu; Viénot i Machado koriste istu putanju množenja matricom, ali Viénotove manje matrice su nešto sporije za pokretanje od JIT-umetnutog (inlined) Machado puta na ovom hardveru.*
+
+::: tip
+Ovo su CPU/JavaScript vremena. Za obradu slika u realnom vremenu, [WebGL šejder](../guide/recipes#webgl-šejder-uniform) pokreće istu matricu na GPU-u sa 10–100× većom propusnošću. Gore navedeni brojevi su u redu za jednokratne transformacije (npr. obrada otpremljene slike jednom).
+:::

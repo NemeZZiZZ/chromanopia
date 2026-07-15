@@ -35,6 +35,13 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Documented previously-implicit `severity` behavior: for the Brettel model with anomaly types the effective strength is scaled by `1.75 / 2.75 ≈ 0.636` (Brettel/Wickline convention), and achromatopsia/achromatomaly always fall back to the Rec. 709 luminance matrix regardless of `model`.
 - Fixed the `exports` map: the `require` condition pointed at `./dist/index.d.cts`, which was never generated, leaving TypeScript consumers under CJS without type declarations. Both conditions now resolve to the generated `./dist/index.d.ts`.
 
+### Documentation
+
+- Added dedicated API pages (in all six languages: en/ja/ru/zh/sr/es) for `simulatePalette()`, the accessibility helpers (`contrastRatio`, `colorDistance`, `isDistinguishable`, `relativeLuminance`), and color conversion utilities (`hexToRgb`, `rgbToHex`, `rgbToHsl`, `hslToRgb`, `toRgb`, `parseCssColor`). These are now surfaced in the VitePress sidebar; previously they were only listed in `types.md` under "Low-level Utilities".
+- README now documents `rgbToHex`, `relativeLuminance`, `srgbToLinear`, `linearToSrgb`, and `gamutMap`, and cross-references the new API pages.
+- `simulate()` API page now links to `simulatePalette()` and the accessibility helpers.
+- **Corrected unrealistic performance numbers** in the benchmark, simulate-buffer, and image-simulation docs (all six languages). The previous tables overstated throughput by ~30–50× (e.g. claimed ~1ms for VGA Machado; actual is ~40ms). Replaced with measured values (Apple M1, Node 22, warm JIT): Machado ≈ 8 Mpix/s, Viénot ≈ 5 Mpix/s, Brettel ≈ 4 Mpix/s. Added an honest caveat that a single `simulateBuffer()` call does not fit a 60fps frame above ~0.3Mpx, with guidance to use a Web Worker or WebGL shader for real-time use.
+
 ## [0.1.1]
 
 - Documentation internationalization (en/ja/ru/zh/sr/es).

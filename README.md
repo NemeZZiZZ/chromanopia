@@ -243,7 +243,10 @@ const simulated = simulatePalette(palette, 'deuteranopia')
 ## Color conversion utilities
 
 ```ts
-import { rgbToHsl, hslToRgb, toRgb, parseCssColor } from 'chromanopia'
+import { hexToRgb, rgbToHex, rgbToHsl, hslToRgb, toRgb, parseCssColor } from 'chromanopia'
+
+hexToRgb('#e63946ff')                     // { r: 230, g: 57, b: 70 } (8-digit hex, alpha dropped)
+rgbToHex({ r: 230, g: 57, b: 70 })        // '#e63946'
 
 rgbToHsl({ r: 255, g: 0, b: 0 })          // { h: 0, s: 1, l: 0.5 }
 hslToRgb({ h: 120, s: 1, l: 0.5 })        // { r: 0, g: 255, b: 0 }
@@ -252,10 +255,23 @@ hslToRgb({ h: 120, s: 1, l: 0.5 })        // { r: 0, g: 255, b: 0 }
 toRgb('rgb(230 57 70 / 0.5)')             // { r: 230, g: 57, b: 70 }
 toRgb({ h: 0, s: 1, l: 0.5 })             // { r: 255, g: 0, b: 0 }
 
-parseCssColor('#e63946ff')                // { r: 230, g: 57, b: 70 } (8-digit hex, alpha dropped)
+parseCssColor('rgb(100%, 0%, 0%)')        // { r: 255, g: 0, b: 0 }
 ```
 
 `hexToRgb` accepts `#RGB`, `#RGBA`, `#RRGGBB`, and `#RRGGBBAA` (with or without `#`).
+
+### Low-level utilities
+
+```ts
+import { srgbToLinear, linearToSrgb, gamutMap, relativeLuminance } from 'chromanopia'
+
+srgbToLinear(128)                         // ≈ 0.2159 (sRGB → linear [0,1], LUT-backed)
+linearToSrgb(0.2159)                      // 128 (linear → sRGB 0–255)
+gamutMap(1.5, -0.1, 0.5)                  // [r, g, b] — maps an out-of-gamut linear triplet into [0,1]
+relativeLuminance(255, 0, 0)              // 0.2126 (WCAG / Rec. 709)
+```
+
+These power the simulation pipeline and are exported for custom pipelines and shaders.
 
 ## References
 

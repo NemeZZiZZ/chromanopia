@@ -32,15 +32,15 @@ ctx.putImageData(imageData, 0, 0)
 
 ## Performanse
 
-`simulateBuffer` obrađuje piksele na licu mesta bez alokacija unutar kritične petlje:
+`simulateBuffer` obrađuje piksele na licu mesta bez alokacija unutar kritične petlje. U zagrejanom JavaScript mašini je propusnost otprilike:
 
-| Veličina slike | Machado/Viénot | Brettel |
+| Veličina slike | Machado | Brettel |
 |---|---|---|
-| 640×480 (VGA) | ~2ms | ~8ms |
-| 1920×1080 (FHD) | ~12ms | ~45ms |
-| 3840×2160 (4K) | ~50ms | ~180ms |
+| 640×480 (VGA) | ~40ms | ~80ms |
+| 1920×1080 (FHD) | ~260ms | ~520ms |
+| 3840×2160 (4K) | ~1.0s | ~2.1s |
 
-Za velike slike, razmislite o korišćenju [Web Worker-a](/sr/guide/recipes#pregledač-offscreencanvas-web-worker) da ne biste blokirali glavnu nit.
+*Jedna referentna tačka — Apple M1, Node 22. Rezultati u pregledaču će se razlikovati. Obrada tipične fotografije (nekoliko megapiksela) deluje skoro trenutno; za velike slike ili korišćenje u realnom vremenu, razmislite o [Web Worker-u](/sr/guide/recipes#pregledač-offscreencanvas-web-worker) ili [WebGL šejderu](/sr/guide/recipes#webgl-šejder-uniform).*
 
 ## Saveti
 

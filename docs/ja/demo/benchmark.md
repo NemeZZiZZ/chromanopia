@@ -30,17 +30,24 @@ import Benchmark from '../../.vitepress/theme/components/Benchmark.vue'
 | **CPU** | V8はホットループを適切に最適化。Apple Siliconは一般的にx86より2倍高速 |
 | **ブラウザ** | V8（Chrome/Edge）とSpiderMonkey（Firefox）は同様のパフォーマンス。JSC（Safari）は変動あり |
 
-## 一般的な結果
+## 代表的な結果
 
-*Apple M1、Chrome 125で計測：*
+*1つの参考値 — Apple M1、Node 22、ウォームJIT、40イテレーションの中央値。結果はハードウェア、ブラウザ、JITのウォームアップ具合により異なります。お使いの環境での数値は上のベンチマークを実行してください。*
 
-| 解像度 | Viénot | Machado | Brettel |
-|---|---|---|---|
-| VGA（640×480） | 約1ms | 約1.5ms | 約6ms |
-| Full HD（1920×1080） | 約8ms | 約10ms | 約40ms |
-| 4K（3840×2160） | 約35ms | 約42ms | 約165ms |
+| Resolution | Pixels | Viénot | Machado | Brettel |
+|---|---|---|---|---|
+| VGA (640×480) | 0.3M | ~60ms | ~40ms | ~80ms |
+| Full HD (1920×1080) | 2.1M | ~420ms | ~260ms | ~520ms |
+| 4K (3840×2160) | 8.3M | ~1.7s | ~1.0s | ~2.1s |
 
-リアルタイムアプリケーション（60fps = 16.7msのバジェット）では、ViénotとMachadoはFull HDまで問題なく処理できます。4Kの場合は、[Web Worker](/ja/guide/recipes#browser-offscreencanvas-web-worker)または[WebGLシェーダー](/ja/guide/recipes#webgl-shader-uniform)の使用を検討してください。
+スループットはほぼ解像度に依存しません：定常状態で **Machado ≈ 8 Mpix/s**、**Viénot ≈ 5 Mpix/s**、**Brettel ≈ 4 Mpix/s**。
+
+::: warning
+1回の `simulateBuffer()` 呼び出しは、数十万ピクセルを超えるいかなる解像度でも60fpsフレーム（16.7ms）に**収まりません** — JavaScriptがそれほど高速に数百万ピクセルを処理することは単に不可能です。リアルタイム用途では：
+- メインスレッドをブロックしないよう、処理を[Web Worker](/ja/guide/recipes#browser-offscreencanvas-web-worker)に移動してください
+- GPUアクセラレーション処理には[WebGL shader](/ja/guide/recipes#webgl-shader-uniform)を使用してください（10〜100倍高速）
+- ワンショットの変換（例：アップロードした画像を1回だけ処理する場合）では、上記の時間で問題ありません — ユーザーは約260msをほぼ瞬時と感じます
+:::
 
 ## コード
 

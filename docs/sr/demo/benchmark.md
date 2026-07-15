@@ -32,15 +32,22 @@ Benchmark:
 
 ## Tipični rezultati
 
-*Mereno na Apple M1, Chrome 125:*
+*Jedna referentna tačka — Apple M1, Node 22, zagrejan JIT, medijana preko 40 iteracija. Vaši brojevi će zavisiti od hardvera, pregledača i toga koliko je JIT zagrejan. Pokrenite gore benchmark za brojeve na vašoj mašini.*
 
-| Rezolucija | Viénot | Machado | Brettel |
-|---|---|---|---|
-| VGA (640×480) | ~1ms | ~1.5ms | ~6ms |
-| Full HD (1920×1080) | ~8ms | ~10ms | ~40ms |
-| 4K (3840×2160) | ~35ms | ~42ms | ~165ms |
+| Rezolucija | Pikseli | Viénot | Machado | Brettel |
+|---|---|---|---|---|
+| VGA (640×480) | 0.3M | ~60ms | ~40ms | ~80ms |
+| Full HD (1920×1080) | 2.1M | ~420ms | ~260ms | ~520ms |
+| 4K (3840×2160) | 8.3M | ~1.7s | ~1.0s | ~2.1s |
 
-Za aplikacije u realnom vremenu (60fps = 16.7ms budžet), Viénot i Machado obrađuju do Full HD bez problema. Za 4K, razmislite o korišćenju [Web Worker-a](/sr/guide/recipes#pregledač-offscreencanvas-web-worker) ili [WebGL šejdera](/sr/guide/recipes#webgl-šejder-uniform).
+Propusnost je otprilike nezavisna od rezolucije: **Machado ≈ 8 Mpix/s**, **Viénot ≈ 5 Mpix/s**, **Brettel ≈ 4 Mpix/s** u stabilnom stanju.
+
+::: warning
+Jedan poziv `simulateBuffer()` se **ne** uklapa u kadar od 60fps (16.7ms) pri bilo kojoj rezoluciji iznad nekoliko stotina hiljada piksela — JavaScript jednostavno ne može da obradi milione piksela toliko brzo. Za korišćenje u realnom vremenu:
+- Prebacite obradu u [Web Worker](/sr/guide/recipes#pregledač-offscreencanvas-web-worker) kako ne bi blokirala glavnu nit
+- Koristite [WebGL šejder](/sr/guide/recipes#webgl-šejder-uniform) za GPU-ubrzanu obradu (10–100× brže)
+- Za jednokratne transformacije (npr. obrada otpremljene slike jednom), gore navedena vremena su u redu — korisnik ~260ms doživljava kao skoro trenutno
+:::
 
 ## Kod
 

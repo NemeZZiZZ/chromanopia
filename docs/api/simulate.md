@@ -73,3 +73,9 @@ simulate({ r: 230, g: 57, b: 70 }, 'none')
 - When `severity` is `0`, returns the input unchanged
 - Internally creates a 4-byte `Uint8ClampedArray` and delegates to `simulateBuffer`
 - For hex input, parses via `hexToRgb`, converts back via `rgbToHex`
+
+## See also
+
+- [`simulatePalette()`](./simulate-palette) — simulate a whole array of colors in one call (no per-color allocation)
+- [`simulateBuffer()`](./simulate-buffer) — process an RGBA pixel buffer in-place (for images)
+- [Accessibility helpers](./accessibility) — contrast ratio, color distance, distinguishability checks

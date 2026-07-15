@@ -32,15 +32,15 @@ ctx.putImageData(imageData, 0, 0)
 
 ## Performance
 
-`simulateBuffer` processes pixels in-place with no allocations inside the hot loop:
+`simulateBuffer` processes pixels in-place with no allocations inside the hot loop. On a warm JavaScript engine, throughput is roughly:
 
-| Image size | Machado/Viénot | Brettel |
+| Image size | Machado | Brettel |
 |---|---|---|
-| 640×480 (VGA) | ~2ms | ~8ms |
-| 1920×1080 (FHD) | ~12ms | ~45ms |
-| 3840×2160 (4K) | ~50ms | ~180ms |
+| 640×480 (VGA) | ~40ms | ~80ms |
+| 1920×1080 (FHD) | ~260ms | ~520ms |
+| 3840×2160 (4K) | ~1.0s | ~2.1s |
 
-For large images, consider using a [Web Worker](/guide/recipes#browser-offscreencanvas-web-worker) to avoid blocking the main thread.
+*One reference point — Apple M1, Node 22. Your browser results will vary. Processing a typical photo (a few megapixels) feels near-instant; for large images or real-time use, consider a [Web Worker](/guide/recipes#browser-offscreencanvas-web-worker) or a [WebGL shader](/guide/recipes#webgl-shader-uniform).*
 
 ## Tips
 
