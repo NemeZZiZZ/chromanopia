@@ -31,27 +31,27 @@ function simulate<T extends string | RGB>(
 import { simulate } from 'chromanopia'
 
 simulate('#e63946', 'protanopia')
-// → '#886b1f'
+// → '#6c6545'
 
 simulate('#F00', 'deuteranopia')
-// → '#a29100'
+// → '#a29000'
 
 simulate('e63946', 'tritanopia')  // # 是可选的
-// → '#eb3636'
+// → '#f60046'
 ```
 
 ### RGB 对象
 
 ```ts
 simulate({ r: 230, g: 57, b: 70 }, 'protanopia')
-// → { r: 136, g: 107, b: 31 }
+// → { r: 108, g: 101, b: 69 }
 ```
 
 ### 使用模型和严重程度
 
 ```ts
 simulate('#e63946', 'protanopia', { model: 'brettel', severity: 0.7 })
-// → '#b36234'
+// → '#aa6d56'
 
 simulate('#e63946', 'protanopia', { severity: 0 })
 // → '#e63946'（未改变 — severity 0 = 正常视觉）

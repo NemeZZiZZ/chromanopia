@@ -21,7 +21,15 @@
  */
 
 // Public API
-export { simulate, simulateBuffer, getMatrix, isMatrixModel } from "./simulate"
+export { simulate, simulateBuffer, simulatePalette, getMatrix, isMatrixModel } from "./simulate"
+
+// Accessibility helpers
+export {
+  relativeLuminance,
+  contrastRatio,
+  colorDistance,
+  isDistinguishable,
+} from "./accessibility"
 
 // Types & metadata
 export {
@@ -29,6 +37,7 @@ export {
   type ColorblindModel,
   type SimulateOptions,
   type RGB,
+  type HSL,
   type Matrix3x3,
   type DeficiencyInfo,
   type ModelInfo,
@@ -36,6 +45,15 @@ export {
   COLORBLIND_MODELS,
 } from "./types"
 
+// Color conversion utilities
+export {
+  hexToRgb,
+  rgbToHex,
+  rgbToHsl,
+  hslToRgb,
+  toRgb,
+  parseCssColor,
+} from "./convert"
+
 // Low-level utilities (for advanced use)
-export { hexToRgb, rgbToHex } from "./convert"
 export { srgbToLinear, linearToSrgb, gamutMap } from "./core"

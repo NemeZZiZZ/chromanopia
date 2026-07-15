@@ -25,7 +25,19 @@ export type ColorblindModel = "vienot" | "machado" | "brettel"
 export interface SimulateOptions {
   /** Simulation model. Default: `"machado"`. */
   model?: ColorblindModel
-  /** Deficiency severity from 0 (none) to 1 (full). Default: `1`. */
+  /**
+   * Deficiency severity from 0 (none) to 1 (full). Default: `1`.
+   * Values outside [0,1] are clamped.
+   *
+   * Behavior notes:
+   * - For matrix models (Viénot, Machado) the matrix is linearly interpolated
+   *   toward the identity matrix.
+   * - For the Brettel model and **anomaly** types (protanomaly, deuteranomaly,
+   *   tritanomaly) the effective strength is scaled by a fixed factor
+   *   (`1.75 / 2.75 ≈ 0.636`) to match the partial-deficiency convention from
+   *   Brettel et al. (1997) / Wickline. Achromatopsia/achromatomaly always fall
+   *   back to the Rec. 709 luminance matrix regardless of `model`.
+   */
   severity?: number
 }
 
@@ -34,6 +46,17 @@ export interface RGB {
   r: number
   g: number
   b: number
+}
+
+/**
+ * HSL color.
+ * - `h`: hue in degrees [0, 360)
+ * - `s`, `l`: saturation and lightness as fractions in [0, 1]
+ */
+export interface HSL {
+  h: number
+  s: number
+  l: number
 }
 
 /** A 3×3 color matrix as a flat 9-element tuple in row-major order. */

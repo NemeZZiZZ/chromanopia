@@ -40,5 +40,5 @@ const result = simulate('#e63946', 'protanopia', {
   model: 'machado',
   severity: 1,
 })
-// → '#886b1f'
+// → '#6c6545'
 ```

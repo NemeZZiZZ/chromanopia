@@ -31,8 +31,8 @@ features:
     title: Zero Dependencies
     details: No runtime dependencies. Works in Node.js, browsers, edge runtimes, and Web Workers out of the box.
   - icon: 🖼️
-    title: Three APIs
-    details: Single color (hex or RGB), pixel buffer (Canvas/Sharp), and raw 3×3 matrix (WebGL shaders).
+    title: Four APIs
+    details: Single color (hex or RGB), full palette, pixel buffer (Canvas/Sharp), and raw 3×3 matrix (WebGL shaders).
   - icon: 🧮
     title: Correct Color Science
     details: sRGB linearization with LUT, gamut mapping via luminance desaturation, Rec. 709 coefficients.

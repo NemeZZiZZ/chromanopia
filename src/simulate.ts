@@ -132,7 +132,12 @@ export function simulate(
   type: ColorblindType,
   options: SimulateOptions = {},
 ): string | RGB {
-  if (type === "none") return color
+  if (type === "none") {
+    // Return a value of the same kind as the input, without aliasing mutable
+    // RGB objects the caller may still hold.
+    if (typeof color === "string") return color
+    return { r: color.r, g: color.g, b: color.b }
+  }
 
   const rgb = typeof color === "string" ? hexToRgb(color) : color
   const pixels = new Uint8ClampedArray([rgb.r, rgb.g, rgb.b, 255])
@@ -142,6 +147,31 @@ export function simulate(
   const result: RGB = { r: pixels[0]!, g: pixels[1]!, b: pixels[2]! }
 
   return typeof color === "string" ? rgbToHex(result) : result
+}
+
+/**
+ * Simulates a palette of colors in one call.
+ *
+ * Each input is simulated independently. Output preserves the input element
+ * types: a hex-string input yields a hex-string output, an RGB object yields an
+ * RGB object. Mixed palettes are supported.
+ *
+ * This avoids the per-color allocation overhead of calling `simulate` in a loop
+ * and is the recommended entry point for batch accessibility checks.
+ *
+ * @returns A new array; the input is not mutated.
+ */
+export function simulatePalette<T extends string | RGB>(
+  colors: readonly T[],
+  type: ColorblindType,
+  options?: SimulateOptions,
+): T[]
+export function simulatePalette(
+  colors: readonly (string | RGB)[],
+  type: ColorblindType,
+  options: SimulateOptions = {},
+): (string | RGB)[] {
+  return colors.map((c) => simulate(c, type, options))
 }
 
 // ─── Brettel internals ──────────────────────────────────────────────────────

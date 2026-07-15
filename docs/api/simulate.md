@@ -31,27 +31,27 @@ function simulate<T extends string | RGB>(
 import { simulate } from 'chromanopia'
 
 simulate('#e63946', 'protanopia')
-// → '#886b1f'
+// → '#6c6545'
 
 simulate('#F00', 'deuteranopia')
-// → '#a29100'
+// → '#a29000'
 
 simulate('e63946', 'tritanopia')  // # is optional
-// → '#eb3636'
+// → '#f60046'
 ```
 
 ### RGB object
 
 ```ts
 simulate({ r: 230, g: 57, b: 70 }, 'protanopia')
-// → { r: 136, g: 107, b: 31 }
+// → { r: 108, g: 101, b: 69 }
 ```
 
 ### With model and severity
 
 ```ts
 simulate('#e63946', 'protanopia', { model: 'brettel', severity: 0.7 })
-// → '#b36234'
+// → '#aa6d56'
 
 simulate('#e63946', 'protanopia', { severity: 0 })
 // → '#e63946' (unchanged — severity 0 = normal vision)
@@ -61,12 +61,15 @@ simulate('#e63946', 'protanopia', { severity: 0 })
 
 ```ts
 simulate('#e63946', 'none')
-// → '#e63946' (always returns input unchanged)
+// → '#e63946' (unchanged)
+
+simulate({ r: 230, g: 57, b: 70 }, 'none')
+// → { r: 230, g: 57, b: 70 } (a new object — the input is never aliased)
 ```
 
 ## Behavior
 
-- When `type` is `"none"`, returns the input unchanged (no processing)
+- When `type` is `"none"`, returns the input unchanged for strings, or a fresh copy for RGB objects (never the same reference, so mutating the result never affects the input)
 - When `severity` is `0`, returns the input unchanged
-- Internally creates a 4-pixel `Uint8ClampedArray` and delegates to `simulateBuffer`
+- Internally creates a 4-byte `Uint8ClampedArray` and delegates to `simulateBuffer`
 - For hex input, parses via `hexToRgb`, converts back via `rgbToHex`

@@ -31,27 +31,27 @@ function simulate<T extends string | RGB>(
 import { simulate } from 'chromanopia'
 
 simulate('#e63946', 'protanopia')
-// → '#886b1f'
+// → '#6c6545'
 
 simulate('#F00', 'deuteranopia')
-// → '#a29100'
+// → '#a29000'
 
 simulate('e63946', 'tritanopia')  // #はオプション
-// → '#eb3636'
+// → '#f60046'
 ```
 
 ### RGBオブジェクト
 
 ```ts
 simulate({ r: 230, g: 57, b: 70 }, 'protanopia')
-// → { r: 136, g: 107, b: 31 }
+// → { r: 108, g: 101, b: 69 }
 ```
 
 ### モデルと重症度の指定
 
 ```ts
 simulate('#e63946', 'protanopia', { model: 'brettel', severity: 0.7 })
-// → '#b36234'
+// → '#aa6d56'
 
 simulate('#e63946', 'protanopia', { severity: 0 })
 // → '#e63946'（変更なし — severity 0 = 正常視覚）

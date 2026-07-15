@@ -54,6 +54,6 @@ const palette = ['#e63946', '#f4a261', '#2a9d8f', '#264653']
 const type = 'deuteranopia'
 
 const simulated = palette.map(color => simulate(color, type))
-// → ['#886b1f', '#c4a833', '#7ba065', '#3b4e4f']
+// → ['#988940', '#cebc61', '#858890', '#384053']
 // 检查：其中是否有太相似的颜色？
 ```

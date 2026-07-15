@@ -1,6 +1,6 @@
 {
   "name": "chromanopia",
-  "version": "0.1.1",
+  "version": "0.2.0",
   "description": "Physically accurate colorblindness simulation — three models (Viénot, Machado, Brettel), sRGB linearization, gamut mapping. Zero dependencies.",
   "keywords": [
     "colorblind",
@@ -39,7 +39,7 @@
         "default": "./dist/index.js"
       },
       "require": {
-        "types": "./dist/index.d.cts",
+        "types": "./dist/index.d.ts",
         "default": "./dist/index.cjs"
       }
     }
@@ -50,6 +50,7 @@
   "files": [
     "dist",
     "README.md",
+    "CHANGELOG.md",
     "LICENSE"
   ],
   "scripts": {

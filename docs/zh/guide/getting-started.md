@@ -23,11 +23,11 @@ import { simulate } from 'chromanopia'
 
 // 输入 hex 字符串 → 输出 hex 字符串
 simulate('#e63946', 'protanopia')
-// → '#8b8b2b'
+// → '#6c6545'
 
 // 输入 RGB 对象 → 输出 RGB 对象
 simulate({ r: 230, g: 57, b: 70 }, 'protanopia')
-// → { r: 139, g: 139, b: 43 }
+// → { r: 108, g: 101, b: 69 }
 ```
 
 ### 选择模型和严重程度
@@ -58,7 +58,7 @@ ctx.putImageData(imageData, 0, 0)
 import { getMatrix } from 'chromanopia'
 
 const matrix = getMatrix('tritanopia', { model: 'machado', severity: 0.5 })
-// → [0.975, 0.025, 0, 0, 0.71667, 0.28333, 0, 0.2375, 0.7625]
+// → [1.127764, -0.0383745, -0.0893895, -0.0392055, 0.9654045, 0.073801, 0.0023665, 0.3456835, 0.65195]
 ```
 
 ## 工作原理

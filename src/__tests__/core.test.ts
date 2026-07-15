@@ -1,5 +1,5 @@
 import { describe, it, expect } from "vitest"
-import { srgbToLinear, linearToSrgb, gamutMap } from "../core"
+import { srgbToLinear, linearToSrgb, gamutMap, relativeLuminance } from "../core"
 
 describe("srgbToLinear", () => {
   it("returns 0 for sRGB 0", () => {
@@ -90,5 +90,71 @@ describe("gamutMap", () => {
     expect(r).toBeGreaterThanOrEqual(0)
     expect(b).toBeGreaterThanOrEqual(0)
     expect(r).toBeLessThanOrEqual(1)
+  })
+
+  it("always returns values within [0,1] (degenerate all-above-gamut)", () => {
+    const [r, g, b] = gamutMap(1.5, 1.5, 0)
+    expect(r).toBeGreaterThanOrEqual(0)
+    expect(r).toBeLessThanOrEqual(1)
+    expect(g).toBeGreaterThanOrEqual(0)
+    expect(g).toBeLessThanOrEqual(1)
+    expect(b).toBeGreaterThanOrEqual(0)
+    expect(b).toBeLessThanOrEqual(1)
+  })
+
+  it("returns white when all channels are equally above 1", () => {
+    const [r, g, b] = gamutMap(2, 2, 2)
+    expect(r).toBe(1)
+    expect(g).toBe(1)
+    expect(b).toBe(1)
+  })
+
+  it("returns black when all channels are equally below 0", () => {
+    const [r, g, b] = gamutMap(-1, -1, -1)
+    expect(r).toBe(0)
+    expect(g).toBe(0)
+    expect(b).toBe(0)
+  })
+
+  it("never produces NaN/Infinity for extreme inputs", () => {
+    for (const [r, g, b] of [
+      [1e9, 1e9, 1e9],
+      [-1e9, -1e9, -1e9],
+      [1e9, -1e9, 0],
+    ] as const) {
+      const out = gamutMap(r, g, b)
+      for (const ch of out) {
+        expect(Number.isFinite(ch)).toBe(true)
+        expect(ch).toBeGreaterThanOrEqual(0)
+        expect(ch).toBeLessThanOrEqual(1)
+      }
+    }
+  })
+})
+
+describe("relativeLuminance", () => {
+  it("is 0 for black and 1 for white", () => {
+    expect(relativeLuminance(0, 0, 0)).toBe(0)
+    expect(relativeLuminance(255, 255, 255)).toBeCloseTo(1, 6)
+  })
+
+  it("weights green highest (Rec. 709)", () => {
+    const greenL = relativeLuminance(0, 255, 0)
+    const redL = relativeLuminance(255, 0, 0)
+    const blueL = relativeLuminance(0, 0, 255)
+    expect(greenL).toBeGreaterThan(redL)
+    expect(redL).toBeGreaterThan(blueL)
+  })
+
+  it("returns a value in [0,1] for any channel values", () => {
+    for (let r = 0; r <= 255; r += 37) {
+      for (let g = 0; g <= 255; g += 53) {
+        for (let b = 0; b <= 255; b += 71) {
+          const L = relativeLuminance(r, g, b)
+          expect(L).toBeGreaterThanOrEqual(0)
+          expect(L).toBeLessThanOrEqual(1)
+        }
+      }
+    }
   })
 })

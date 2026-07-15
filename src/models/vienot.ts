@@ -1,6 +1,6 @@
 /**
  * Viénot, Brettel & Mollon (1999) — 3×3 matrices, severity 1.0.
- * All values ≥ 0, row sums = 1.0.
+ * All values ≥ 0, row sums ≈ 1.0 (up to rounding of the published coefficients).
  */
 
 import type { ColorblindType, Matrix3x3 } from "../types"
