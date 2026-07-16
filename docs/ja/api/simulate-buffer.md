@@ -83,11 +83,11 @@ simulateBuffer(pixels, 'protanomaly', { severity: 0.5 })
 
 | Resolution | Pixels | Viénot | Machado | Brettel |
 |---|---|---|---|---|
-| 640×480 | 0.3M | ~60ms | ~40ms | ~80ms |
-| 1920×1080 | 2.1M | ~420ms | ~260ms | ~520ms |
-| 3840×2160 | 8.3M | ~1.7s | ~1.0s | ~2.1s |
+| 640×480 | 0.3M | ~80ms | ~85ms | ~100ms |
+| 1920×1080 | 2.1M | ~590ms | ~560ms | ~660ms |
+| 3840×2160 | 8.3M | ~2.4s | ~2.2s | ~2.6s |
 
-*1つの参考値 — Apple M1、Node 22、ウォームJIT。BrettelはピクセルごとのXYZ射影のためMachadoより約1.5〜2倍遅いです。ViénotとMachadoは同じ行列乗算パスを使用しますが、このハードウェアではViénotのより小さな行列はJITインライン化されたMachadoパスよりディスパッチがわずかに遅くなります。*
+*1つの参考値 — Apple M1、Node 22、ウォームJIT。3つのモデルはすべてほぼ ~3.5 Mpix/s で動作します。BrettelのピクセルごとのCIE xyY射影は行列パスよりわずか ~15〜20% 遅いだけであり、その精度の高さから予想される数倍の差はありません。*
 
 ::: tip
 これらはCPU/JavaScriptの計測値です。リアルタイム画像処理では、[WebGL shader](../guide/recipes#webgl-shader-uniform)がGPU上で同じ行列を10〜100倍のスループットで実行します。上記の数値はワンショットの変換（例：アップロードした画像を1回だけ処理する場合）には問題ありません。

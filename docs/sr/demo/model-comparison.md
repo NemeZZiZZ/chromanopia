@@ -29,7 +29,7 @@ Svaki model koristi različit matematički pristup za simulaciju gubitka čepić
 
 - **Machado** modeluje spektralni pomak pogođenog tipa čepića. Vrednosti matrice mogu biti negativne (boja može trebati da "pozajmi" iz drugog kanala), što je preciznije ali može proizvesti međuvrednosti van gamuta.
 
-- **Brettel** uopšte ne koristi jednu matricu — projektuje svaki piksel pojedinačno u CIE xyY hromatičnom prostoru duž linije konfuzije ka tački konfuzije. Ovo je najpreciznije ali ~3-5× sporije.
+- **Brettel** uopšte ne koristi jednu matricu — projektuje svaki piksel pojedinačno u CIE xyY hromatičnom prostoru duž linije konfuzije ka tački konfuzije. Ovo je najpreciznije ali ~1.2× sporije.
 
 ### Kada razlike imaju značaj?
 

@@ -83,11 +83,11 @@ Funkcija obrađuje 4 bajta odjednom bez alokacija unutar kritične petlje. Perfo
 
 | Rezolucija | Pikseli | Viénot | Machado | Brettel |
 |---|---|---|---|---|
-| 640×480 | 0.3M | ~60ms | ~40ms | ~80ms |
-| 1920×1080 | 2.1M | ~420ms | ~260ms | ~520ms |
-| 3840×2160 | 8.3M | ~1.7s | ~1.0s | ~2.1s |
+| 640×480 | 0.3M | ~80ms | ~85ms | ~100ms |
+| 1920×1080 | 2.1M | ~590ms | ~560ms | ~660ms |
+| 3840×2160 | 8.3M | ~2.4s | ~2.2s | ~2.6s |
 
-*Jedna referentna tačka — Apple M1, Node 22, zagrejan JIT. Brettel je ~1.5–2× sporiji od Machado zbog XYZ projekcije po pikselu; Viénot i Machado koriste istu putanju množenja matricom, ali Viénotove manje matrice su nešto sporije za pokretanje od JIT-umetnutog (inlined) Machado puta na ovom hardveru.*
+*Jedna referentna tačka — Apple M1, Node 22, zagrejan JIT. Sva tri modela rade sa otprilike ~3.5 Mpix/s; Brettelova CIE xyY projekcija po pikselu je samo ~15–20% sporija od matrične putanje, a ne razlika od nekoliko puta koja bi se mogla očekivati na osnovu njene prednosti u tačnosti.*
 
 ::: tip
 Ovo su CPU/JavaScript vremena. Za obradu slika u realnom vremenu, [WebGL šejder](../guide/recipes#webgl-šejder-uniform) pokreće istu matricu na GPU-u sa 10–100× većom propusnošću. Gore navedeni brojevi su u redu za jednokratne transformacije (npr. obrada otpremljene slike jednom).

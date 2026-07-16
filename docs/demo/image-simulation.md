@@ -36,11 +36,11 @@ ctx.putImageData(imageData, 0, 0)
 
 | Image size | Machado | Brettel |
 |---|---|---|
-| 640×480 (VGA) | ~40ms | ~80ms |
-| 1920×1080 (FHD) | ~260ms | ~520ms |
-| 3840×2160 (4K) | ~1.0s | ~2.1s |
+| 640×480 (VGA) | ~85ms | ~100ms |
+| 1920×1080 (FHD) | ~560ms | ~660ms |
+| 3840×2160 (4K) | ~2.2s | ~2.6s |
 
-*One reference point — Apple M1, Node 22. Your browser results will vary. Processing a typical photo (a few megapixels) feels near-instant; for large images or real-time use, consider a [Web Worker](/guide/recipes#browser-offscreencanvas-web-worker) or a [WebGL shader](/guide/recipes#webgl-shader-uniform).*
+*One reference point — Apple M1, Node 22. Your browser results will vary. Processing a typical photo (a few megapixels) takes a fraction of a second; for large images or real-time use, consider a [Web Worker](/guide/recipes#browser-offscreencanvas-web-worker) or a [WebGL shader](/guide/recipes#webgl-shader-uniform).*
 
 ## Tips
 

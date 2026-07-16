@@ -29,7 +29,7 @@ Each model uses a different mathematical approach to simulate cone loss:
 
 - **Machado** models the spectral shift of the affected cone type. Matrix values can be negative (a color may need to "borrow" from another channel), which is more accurate but can produce out-of-gamut intermediate values.
 
-- **Brettel** doesn't use a single matrix at all — it projects each pixel individually in CIE xyY chromaticity space along the confusion line toward the confusion point. This is the most accurate but ~3-5× slower.
+- **Brettel** doesn't use a single matrix at all — it projects each pixel individually in CIE xyY chromaticity space along the confusion line toward the confusion point. This is the most accurate but ~1.2× slower.
 
 ### When do the differences matter?
 

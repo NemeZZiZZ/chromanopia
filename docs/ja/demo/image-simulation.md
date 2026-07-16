@@ -36,9 +36,9 @@ ctx.putImageData(imageData, 0, 0)
 
 | Image size | Machado | Brettel |
 |---|---|---|
-| 640×480 (VGA) | ~40ms | ~80ms |
-| 1920×1080 (FHD) | ~260ms | ~520ms |
-| 3840×2160 (4K) | ~1.0s | ~2.1s |
+| 640×480 (VGA) | ~85ms | ~100ms |
+| 1920×1080 (FHD) | ~560ms | ~660ms |
+| 3840×2160 (4K) | ~2.2s | ~2.6s |
 
 *1つの参考値 — Apple M1、Node 22。ブラウザでの結果は環境により異なります。一般的な写真（数メガピクセル）の処理はほぼ瞬時に感じられます。大きな画像やリアルタイム用途では、[Web Worker](/ja/guide/recipes#browser-offscreencanvas-web-worker)または[WebGL shader](/ja/guide/recipes#webgl-shader-uniform)の使用を検討してください。*
 

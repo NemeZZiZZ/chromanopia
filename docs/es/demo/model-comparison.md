@@ -29,7 +29,7 @@ Cada modelo usa un enfoque matemático diferente para simular la pérdida de con
 
 - **Machado** modela el desplazamiento espectral del tipo de cono afectado. Los valores de la matriz pueden ser negativos (un color puede necesitar "tomar prestado" de otro canal), lo cual es más preciso pero puede producir valores intermedios fuera de gama.
 
-- **Brettel** no usa una sola matriz — proyecta cada píxel individualmente en el espacio de cromaticidad CIE xyY a lo largo de la línea de confusión hacia el punto de confusión. Es el más preciso pero ~3-5× más lento.
+- **Brettel** no usa una sola matriz — proyecta cada píxel individualmente en el espacio de cromaticidad CIE xyY a lo largo de la línea de confusión hacia el punto de confusión. Es el más preciso pero ~1.2× más lento.
 
 ### ¿Cuándo importan las diferencias?
 

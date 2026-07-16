@@ -8,7 +8,7 @@ chromanopia implementira tri recenzirana modela simulacije. Svaki na različit n
 |---|---|---|---|---|---|
 | **Viénot** | 1999 | 3×3 matrica, nenegativna | Najbrži | Dobra | UI u realnom vremenu, brzi pregled |
 | **Machado** | 2009 | 3×3 matrica spektralnog pomaka | Brz | Bolja | Podrazumevani izbor, najbolji balans |
-| **Brettel** | 1997 | CIE xyY projekcija po pikselu | ~3-5× sporiji | Najbolja | Istraživanje, validacija, referenca |
+| **Brettel** | 1997 | CIE xyY projekcija po pikselu | ~1.2× sporiji | Najbolja | Istraživanje, validacija, referenca |
 
 ## Viénot (1999)
 
@@ -47,7 +47,7 @@ simulate('#e63946', 'protanopia')
 - Projektuje svaki piksel na liniju konfuzije u CIE xyY prostoru boja
 - Nije jedna matrica — svaki piksel zahteva XYZ konverziju, projekciju i inverziju
 - Najprecizniji model, posebno za tritanopiju
-- ~3-5× sporiji od matričnih modela
+- ~1.2× sporiji od matričnih modela
 - Prelazi na Machado matrice za štapićastu monohromatopsiju (ahromatopsija / ahromatomalija)
 - Najbolje za: istraživanje, referentni izlaz, validaciju sa drugim implementacijama
 

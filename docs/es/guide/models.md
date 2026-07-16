@@ -8,7 +8,7 @@ chromanopia implementa tres modelos de simulación revisados por pares. Cada uno
 |---|---|---|---|---|---|
 | **Viénot** | 1999 | Matriz 3×3, no negativa | Más rápido | Buena | UI en tiempo real, vistas previas rápidas |
 | **Machado** | 2009 | Matriz 3×3 de desplazamiento espectral | Rápido | Mejor | Opción por defecto, mejor equilibrio |
-| **Brettel** | 1997 | Proyección CIE xyY por píxel | ~3-5× más lento | La mejor | Investigación, validación, referencia |
+| **Brettel** | 1997 | Proyección CIE xyY por píxel | ~1.2× más lento | La mejor | Investigación, validación, referencia |
 
 ## Viénot (1999)
 
@@ -47,7 +47,7 @@ simulate('#e63946', 'protanopia')
 - Proyecta cada píxel sobre la línea de confusión en el espacio de color CIE xyY
 - No es una sola matriz — cada píxel requiere conversión XYZ, proyección e inversión
 - El modelo más preciso, especialmente para tritanopía
-- ~3-5× más lento que los modelos de matriz
+- ~1.2× más lento que los modelos de matriz
 - Recurre a las matrices de Machado para monocromatismo de bastones (acromatopsia / acromatoamalía)
 - Ideal para: investigación, salida de referencia, validación contra otras implementaciones
 

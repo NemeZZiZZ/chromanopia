@@ -83,11 +83,11 @@ The function processes 4 bytes at a time with no allocations inside the hot loop
 
 | Resolution | Pixels | Viénot | Machado | Brettel |
 |---|---|---|---|---|
-| 640×480 | 0.3M | ~60ms | ~40ms | ~80ms |
-| 1920×1080 | 2.1M | ~420ms | ~260ms | ~520ms |
-| 3840×2160 | 8.3M | ~1.7s | ~1.0s | ~2.1s |
+| 640×480 | 0.3M | ~80ms | ~85ms | ~100ms |
+| 1920×1080 | 2.1M | ~590ms | ~560ms | ~660ms |
+| 3840×2160 | 8.3M | ~2.4s | ~2.2s | ~2.6s |
 
-*One reference point — Apple M1, Node 22, warm JIT. Brettel is ~1.5–2× slower than Machado due to per-pixel XYZ projection; Viénot and Machado use the same matrix-multiply path but Viénot's smaller matrices are slightly slower to dispatch than the JIT-inlined Machado path on this hardware.*
+*One reference point — Apple M1, Node 22, warm JIT. All three models run at roughly ~3.5 Mpix/s; Brettel's per-pixel CIE xyY projection is only ~15–20% slower than the matrix path, not the several× gap one might expect from its accuracy advantage.*
 
 ::: tip
 These are CPU/JavaScript timings. For real-time image processing, a [WebGL shader](../guide/recipes#webgl-shader-uniform) runs the same matrix on the GPU at 10–100× the throughput. The numbers above are fine for one-shot transforms (e.g. processing an uploaded image once).

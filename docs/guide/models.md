@@ -8,7 +8,7 @@ chromanopia implements three peer-reviewed simulation models. Each trades accura
 |---|---|---|---|---|---|
 | **Viénot** | 1999 | 3×3 matrix, non-negative | Fastest | Good | Real-time UI, quick previews |
 | **Machado** | 2009 | 3×3 spectral-shift matrix | Fast | Better | Default choice, best balance |
-| **Brettel** | 1997 | Per-pixel CIE xyY projection | ~3-5× slower | Best | Research, validation, reference |
+| **Brettel** | 1997 | Per-pixel CIE xyY projection | ~1.2× slower | Best | Research, validation, reference |
 
 ## Viénot (1999)
 
@@ -47,7 +47,7 @@ simulate('#e63946', 'protanopia')
 - Projects each pixel onto the confusion line in CIE xyY color space
 - Not a single matrix — each pixel requires XYZ conversion, projection, and inverse
 - Most accurate model, especially for tritanopia
-- ~3-5× slower than matrix models
+- ~1.2× slower than matrix models
 - Falls back to Machado matrices for rod monochromacy (achromatopsia / achromatomaly)
 - Best for: research, reference output, validation against other implementations
 

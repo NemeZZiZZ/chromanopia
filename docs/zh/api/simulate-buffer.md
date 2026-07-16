@@ -83,11 +83,11 @@ simulateBuffer(pixels, 'protanomaly', { severity: 0.5 })
 
 | 分辨率 | 像素数 | Viénot | Machado | Brettel |
 |---|---|---|---|---|
-| 640×480 | 0.3M | ~60ms | ~40ms | ~80ms |
-| 1920×1080 | 2.1M | ~420ms | ~260ms | ~520ms |
-| 3840×2160 | 8.3M | ~1.7s | ~1.0s | ~2.1s |
+| 640×480 | 0.3M | ~80ms | ~85ms | ~100ms |
+| 1920×1080 | 2.1M | ~590ms | ~560ms | ~660ms |
+| 3840×2160 | 8.3M | ~2.4s | ~2.2s | ~2.6s |
 
-*一个参考点 — Apple M1、Node 22、预热 JIT。由于逐像素 XYZ 投影，Brettel 比 Machado 慢约 1.5–2 倍；Viénot 和 Machado 使用相同的矩阵乘法路径，但在此硬件上，Viénot 较小的矩阵在调度上比 JIT 内联的 Machado 路径略慢。*
+*一个参考点 — Apple M1、Node 22、预热 JIT。三种模型的吞吐量都约为 ~3.5 Mpix/s；Brettel 的逐像素 CIE xyY 投影仅比矩阵路径慢约 ~15–20%，并不像人们根据其精度优势所预期的那样存在数倍的差距。*
 
 ::: tip
 这些是 CPU/JavaScript 计时。对于实时图像处理，[WebGL shader](../guide/recipes#webgl-shader-uniform) 在 GPU 上运行相同的矩阵，吞吐量约为 10–100 倍。上述数值对于一次性转换（例如处理一次上传的图像）没问题。

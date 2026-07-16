@@ -113,7 +113,7 @@ interface SimulateOptions {
 |---|---|---|---|---|
 | **Viénot** | 1999 | 3×3 matrix, non-negative | Fastest | Good |
 | **Machado** | 2009 | 3×3 spectral-shift matrix | Fast | Better |
-| **Brettel** | 1997 | Per-pixel CIE xyY projection | ~3-5× slower | Best |
+| **Brettel** | 1997 | Per-pixel CIE xyY projection | ~1.2× slower | Best |
 
 All models apply proper sRGB linearization (gamma removal before simulation, re-application after) and gamut mapping (desaturation toward luminance for matrix models, D65 neutral shift for Brettel).
 

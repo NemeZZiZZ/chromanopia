@@ -25,7 +25,7 @@ import Benchmark from '../../.vitepress/theme/components/Benchmark.vue'
 
 | 要因 | 影響 |
 |---|---|
-| **モデル** | BrettelはViénot/Machadoより約3〜5倍遅い（ピクセルごとのXYZ射影） |
+| **モデル** | BrettelはViénot/Machadoより約1.2倍遅い（ピクセルごとのXYZ射影） |
 | **解像度** | 線形スケーリング — 4KはFull HDより約4倍遅い |
 | **CPU** | V8はホットループを適切に最適化。Apple Siliconは一般的にx86より2倍高速 |
 | **ブラウザ** | V8（Chrome/Edge）とSpiderMonkey（Firefox）は同様のパフォーマンス。JSC（Safari）は変動あり |
@@ -36,11 +36,11 @@ import Benchmark from '../../.vitepress/theme/components/Benchmark.vue'
 
 | Resolution | Pixels | Viénot | Machado | Brettel |
 |---|---|---|---|---|
-| VGA (640×480) | 0.3M | ~60ms | ~40ms | ~80ms |
-| Full HD (1920×1080) | 2.1M | ~420ms | ~260ms | ~520ms |
-| 4K (3840×2160) | 8.3M | ~1.7s | ~1.0s | ~2.1s |
+| VGA (640×480) | 0.3M | ~80ms | ~85ms | ~100ms |
+| Full HD (1920×1080) | 2.1M | ~590ms | ~560ms | ~660ms |
+| 4K (3840×2160) | 8.3M | ~2.4s | ~2.2s | ~2.6s |
 
-スループットはほぼ解像度に依存しません：定常状態で **Machado ≈ 8 Mpix/s**、**Viénot ≈ 5 Mpix/s**、**Brettel ≈ 4 Mpix/s**。
+スループットはほぼ解像度に依存せず、行列モデル（Viénot、Machado）で **~3.5 Mpix/s**、Brettelで **~3.2 Mpix/s** です。
 
 ::: warning
 1回の `simulateBuffer()` 呼び出しは、数十万ピクセルを超えるいかなる解像度でも60fpsフレーム（16.7ms）に**収まりません** — JavaScriptがそれほど高速に数百万ピクセルを処理することは単に不可能です。リアルタイム用途では：

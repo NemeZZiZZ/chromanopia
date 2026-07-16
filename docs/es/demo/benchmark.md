@@ -25,7 +25,7 @@ El benchmark:
 
 | Factor | Impacto |
 |---|---|
-| **Modelo** | Brettel es ~3-5× más lento que Viénot/Machado (proyección XYZ por píxel) |
+| **Modelo** | Brettel es ~1.2× más lento que Viénot/Machado (proyección XYZ por píxel) |
 | **Resolución** | Escalado lineal — 4K es ~4× más lento que Full HD |
 | **CPU** | V8 optimiza bien el bucle principal; Apple Silicon es típicamente 2× más rápido que x86 |
 | **Navegador** | V8 (Chrome/Edge) y SpiderMonkey (Firefox) rinden de forma similar; JSC (Safari) varía |
@@ -36,11 +36,11 @@ El benchmark:
 
 | Resolución | Píxeles | Viénot | Machado | Brettel |
 |---|---|---|---|---|
-| VGA (640×480) | 0.3M | ~60ms | ~40ms | ~80ms |
-| Full HD (1920×1080) | 2.1M | ~420ms | ~260ms | ~520ms |
-| 4K (3840×2160) | 8.3M | ~1.7s | ~1.0s | ~2.1s |
+| VGA (640×480) | 0.3M | ~80ms | ~85ms | ~100ms |
+| Full HD (1920×1080) | 2.1M | ~590ms | ~560ms | ~660ms |
+| 4K (3840×2160) | 8.3M | ~2.4s | ~2.2s | ~2.6s |
 
-El rendimiento es aproximadamente independiente de la resolución: **Machado ≈ 8 Mpix/s**, **Viénot ≈ 5 Mpix/s**, **Brettel ≈ 4 Mpix/s** en estado estable.
+El rendimiento es aproximadamente independiente de la resolución en **~3.5 Mpix/s** para los modelos de matriz (Viénot, Machado) y **~3.2 Mpix/s** para Brettel.
 
 ::: warning
 Una sola llamada a `simulateBuffer()` **no** cabe en un frame de 60fps (16.7ms) a ninguna resolución por encima de unos cientos de miles de píxeles — JavaScript simplemente no puede procesar millones de píxeles tan rápido. Para uso en tiempo real:

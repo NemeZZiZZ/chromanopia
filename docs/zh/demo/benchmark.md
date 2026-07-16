@@ -25,7 +25,7 @@ import Benchmark from '../../.vitepress/theme/components/Benchmark.vue'
 
 | 因素 | 影响 |
 |---|---|
-| **模型** | Brettel 比 Viénot/Machado 慢约 3-5 倍（逐像素 XYZ 投影） |
+| **模型** | Brettel 比 Viénot/Machado 慢约 1.2 倍（逐像素 XYZ 投影） |
 | **分辨率** | 线性缩放 — 4K 比全高清慢约 4 倍 |
 | **CPU** | V8 对热循环优化良好；Apple Silicon 通常比 x86 快 2 倍 |
 | **浏览器** | V8 (Chrome/Edge) 和 SpiderMonkey (Firefox) 性能相近；JSC (Safari) 有所不同 |
@@ -36,11 +36,11 @@ import Benchmark from '../../.vitepress/theme/components/Benchmark.vue'
 
 | 分辨率 | 像素数 | Viénot | Machado | Brettel |
 |---|---|---|---|---|
-| VGA (640×480) | 0.3M | ~60ms | ~40ms | ~80ms |
-| Full HD (1920×1080) | 2.1M | ~420ms | ~260ms | ~520ms |
-| 4K (3840×2160) | 8.3M | ~1.7s | ~1.0s | ~2.1s |
+| VGA (640×480) | 0.3M | ~80ms | ~85ms | ~100ms |
+| Full HD (1920×1080) | 2.1M | ~590ms | ~560ms | ~660ms |
+| 4K (3840×2160) | 8.3M | ~2.4s | ~2.2s | ~2.6s |
 
-吞吐量基本上与分辨率无关：稳态下 **Machado ≈ 8 Mpix/s**、**Viénot ≈ 5 Mpix/s**、**Brettel ≈ 4 Mpix/s**。
+吞吐量基本上与分辨率无关：矩阵模型（Viénot、Machado）约为 **~3.5 Mpix/s**，Brettel 约为 **~3.2 Mpix/s**。
 
 ::: warning
 单次 `simulateBuffer()` 调用在任何超过几十万像素的分辨率下都**无法**装入 60fps 的帧（16.7ms）—— JavaScript 根本无法那么快地处理数百万像素。对于实时使用：
